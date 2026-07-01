@@ -1,8 +1,7 @@
 import os
 import urllib.request
 
-print("=" * 60)
-print("  Creating Hakki Yamani Project")
+print("جاري إنشاء مشروع 'حقي كيمني' - النسخة الكاملة...")
 print("=" * 60)
 
 project_name = "my_yemeni_right"
@@ -31,66 +30,77 @@ directories = [
 
 for dir_path in directories:
     os.makedirs(dir_path, exist_ok=True)
-    print(f"OK: {dir_path.replace(base_dir + os.sep, '')}")
+    print(f"OK: {dir_path.replace(base_dir + '/', '')}")
 
 def write_file(path, content):
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"OK: {os.path.basename(path)}")
+    print(f"OK: {path.replace(base_dir + '/', '')}")
 
-print("\nGenerating logo...")
+print("\nجاري توليد صورة الشعار...")
 try:
     from PIL import Image, ImageDraw
     size = 1024
     img = Image.new('RGBA', (size, size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
+
     yemeni_green = (27, 94, 32, 255)
     yemeni_red = (198, 40, 40, 255)
     yemeni_white = (255, 255, 255, 255)
     yemeni_black = (33, 33, 33, 255)
     gold = (255, 215, 0, 255)
+
     shield_points = [
-        (size // 2, 80),
+        (size//2, 80),
         (size - 120, 150),
-        (size - 120, size // 2 + 100),
-        (size // 2, size - 80),
-        (120, size // 2 + 100),
+        (size - 120, size//2 + 100),
+        (size//2, size - 80),
+        (120, size//2 + 100),
         (120, 150),
     ]
     draw.polygon(shield_points, fill=yemeni_green, outline=gold, width=15)
+
     stripe_height = (size - 260) // 3
-    draw.rectangle([140, 170, size - 140, 170 + stripe_height], fill=yemeni_red)
-    draw.rectangle([140, 170 + stripe_height, size - 140, 170 + stripe_height * 2], fill=yemeni_white)
-    draw.rectangle([140, 170 + stripe_height * 2, size - 140, 170 + stripe_height * 3], fill=yemeni_black)
+    draw.rectangle([140, 170, size-140, 170+stripe_height], fill=yemeni_red)
+    draw.rectangle([140, 170+stripe_height, size-140, 170+stripe_height*2], fill=yemeni_white)
+    draw.rectangle([140, 170+stripe_height*2, size-140, 170+stripe_height*3], fill=yemeni_black)
+
     center_x = size // 2
-    draw.rectangle([center_x - 15, 280, center_x + 15, 700], fill=gold, outline=yemeni_black, width=3)
-    draw.rectangle([center_x - 120, 700, center_x + 120, 730], fill=gold, outline=yemeni_black, width=3)
-    draw.rectangle([center_x - 150, 730, center_x + 150, 760], fill=gold, outline=yemeni_black, width=3)
-    draw.rectangle([180, 280, size - 180, 310], fill=gold, outline=yemeni_black, width=3)
-    draw.ellipse([center_x - 25, 240, center_x + 25, 290], fill=gold, outline=yemeni_black, width=3)
+    draw.rectangle([center_x-15, 280, center_x+15, 700], fill=gold, outline=yemeni_black, width=3)
+    draw.rectangle([center_x-120, 700, center_x+120, 730], fill=gold, outline=yemeni_black, width=3)
+    draw.rectangle([center_x-150, 730, center_x+150, 760], fill=gold, outline=yemeni_black, width=3)
+    draw.rectangle([180, 280, size-180, 310], fill=gold, outline=yemeni_black, width=3)
+    draw.ellipse([center_x-25, 240, center_x+25, 290], fill=gold, outline=yemeni_black, width=3)
+
     draw.line([220, 310, 220, 500], fill=gold, width=8)
     draw.line([180, 500, 260, 500], fill=gold, width=8)
     draw.polygon([(180, 500), (260, 500), (240, 620), (200, 620)], fill=gold, outline=yemeni_black, width=3)
-    draw.line([size - 220, 310, size - 220, 500], fill=gold, width=8)
-    draw.line([size - 260, 500, size - 180, 500], fill=gold, width=8)
-    draw.polygon([(size - 260, 500), (size - 180, 500), (size - 200, 620), (size - 240, 620)], fill=gold, outline=yemeni_black, width=3)
+
+    draw.line([size-220, 310, size-220, 500], fill=gold, width=8)
+    draw.line([size-260, 500, size-180, 500], fill=gold, width=8)
+    draw.polygon([(size-260, 500), (size-180, 500), (size-200, 620), (size-240, 620)], fill=gold, outline=yemeni_black, width=3)
+
     draw.ellipse([170, 270, 230, 330], fill=gold, outline=yemeni_black, width=3)
-    draw.ellipse([size - 230, 270, size - 170, 330], fill=gold, outline=yemeni_black, width=3)
+    draw.ellipse([size-230, 270, size-170, 330], fill=gold, outline=yemeni_black, width=3)
+
     icons_dir = f"{base_dir}/assets/icons"
     images_dir = f"{base_dir}/assets/images"
+
     img.save(f"{icons_dir}/app_icon.png", "PNG")
     img.save(f"{images_dir}/logo.png", "PNG")
+
     bg_img = Image.new('RGBA', (size, size), yemeni_green)
     bg_img.paste(img, (0, 0), img)
     bg_img.save(f"{icons_dir}/app_icon_bg.png", "PNG")
-    print("OK: Logo generated")
+
+    print("تم توليد الشعار بنجاح!")
 except ImportError:
-    print("WARN: Pillow not installed")
+    print("مكتبة Pillow غير مثبتة. جاري تثبيتها...")
     os.system("pip install Pillow")
-    print("Please run the script again")
+    print("تم تثبيت Pillow. يرجى إعادة تشغيل السكريبت.")
     exit()
 
-print("\nDownloading Arabic fonts...")
+print("\nجاري تحميل الخطوط العربية...")
 fonts_to_download = {
     "Cairo-Regular.ttf": "https://github.com/googlefonts/CairoFont/raw/main/fonts/ttf/Cairo-Regular.ttf",
     "Cairo-Bold.ttf": "https://github.com/googlefonts/CairoFont/raw/main/fonts/ttf/Cairo-Bold.ttf",
@@ -102,16 +112,15 @@ fonts_dir = f"{base_dir}/assets/fonts"
 for font_name, font_url in fonts_to_download.items():
     font_path = f"{fonts_dir}/{font_name}"
     try:
-        print(f"Downloading {font_name}...")
+        print(f"تحميل {font_name}...")
         urllib.request.urlretrieve(font_url, font_path)
-        print(f"OK: {font_name}")
+        print(f"تم تحميل {font_name}")
     except Exception as e:
-        print(f"WARN: Failed to download {font_name}: {e}")
-
-print("\nOK: Fonts downloaded")
+        print(f"فشل تحميل {font_name}: {e}")
+print("\nتم تحميل الخطوط!")
 
 write_file(f"{base_dir}/pubspec.yaml", """name: my_yemeni_right
-description: Hakki Yamani - Legal App
+description: حقي كيمني - التطبيق القانوني الشامل للمواطن اليمني
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -130,24 +139,43 @@ dependencies:
   firebase_core: ^2.24.0
   firebase_auth: ^4.15.0
   cloud_firestore: ^4.13.0
+  firebase_storage: ^11.5.0
+  firebase_messaging: ^14.7.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path_provider: ^2.1.1
   cupertino_icons: ^1.0.6
-  pin_code_fields: ^8.0.1
+  flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.0
+  shimmer: ^3.0.0
+  flutter_form_builder: ^9.1.1
+  form_builder_validators: ^9.1.0
+  url_launcher: ^6.2.1
+  share_plus: ^7.2.1
   image_picker: ^1.0.5
+  file_picker: ^6.1.1
   permission_handler: ^11.0.1
+  dio: ^5.4.0
+  connectivity_plus: ^5.0.2
+  pin_code_fields: ^8.0.1
+  font_awesome_flutter: ^10.6.0
+  lottie: ^2.7.0
+  animate_do: ^3.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.7
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
     - assets/icons/
+    - assets/laws/
   fonts:
     - family: Cairo
       fonts:
@@ -161,49 +189,71 @@ flutter:
         - asset: assets/fonts/Tajawal-Regular.ttf
         - asset: assets/fonts/Tajawal-Bold.ttf
           weight: 700
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  adaptive_icon_background: "#1B5E20"
 """)
 
 write_file(f"{base_dir}/lib/main.dart", """import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/config/routes.dart';
 import 'core/config/theme/app_theme.dart';
+import 'core/services/local_storage_service.dart';
+import 'providers/auth_provider.dart';
+import 'providers/law_provider.dart';
+import 'providers/consultation_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await Hive.initFlutter();
+  await LocalStorageService.init();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Hakki Yamani',
-      debugShowCheckedModeBanner: false,
-      locale: const Locale('ar', 'YE'),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => LawProvider()),
+        ChangeNotifierProvider(create: (_) => ConsultationProvider()),
       ],
-      supportedLocales: const [Locale('ar', 'YE'), Locale('ar', 'SA')],
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      routerConfig: AppRouter.router,
-      builder: (context, child) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: child!,
-        );
-      },
+      child: MaterialApp.router(
+        title: 'حقي كيمني',
+        debugShowCheckedModeBanner: false,
+        locale: const Locale('ar', 'YE'),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('ar', 'YE'), Locale('ar', 'SA')],
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        routerConfig: AppRouter.router,
+        builder: (context, child) {
+          return Directionality(
+            textDirection: TextDirection.rtl,
+            child: child!,
+          );
+        },
+      ),
     );
   }
 }
@@ -371,8 +421,8 @@ class AppRouter {
       GoRoute(path: '/faq', name: 'faq', builder: (context, state) => const FaqScreen()),
     ],
     errorBuilder: (context, state) => Scaffold(
-      appBar: AppBar(title: const Text('Error')),
-      body: const Center(child: Text('Page not found')),
+      appBar: AppBar(title: const Text('خطأ')),
+      body: const Center(child: Text('الصفحة غير موجودة')),
     ),
   );
 }
@@ -524,7 +574,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _errorMessage = 'Invalid OTP';
+      _errorMessage = 'رمز التحقق غير صحيح';
       _isLoading = false;
       notifyListeners();
       return false;
@@ -541,7 +591,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _errorMessage = 'Invalid email or password';
+      _errorMessage = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
       _isLoading = false;
       notifyListeners();
       return false;
@@ -570,7 +620,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _errorMessage = 'Registration failed';
+      _errorMessage = 'حدث خطأ أثناء التسجيل';
       _isLoading = false;
       notifyListeners();
       return false;
@@ -663,23 +713,25 @@ class ConsultationProvider extends ChangeNotifier {
       notifyListeners();
       return docRef.id;
     } catch (e) {
-      throw Exception('Failed to create consultation');
+      throw Exception('فشل في إنشاء الاستشارة');
     }
   }
 }
 """)
 
 write_file(f"{base_dir}/lib/features/auth/screens/login_screen.dart", """import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../providers/auth_provider.dart';
 import '../../../core/config/theme/app_theme.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -694,13 +746,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
-    if (mounted) {
+    final success = await ref.read(authProvider).signInWithEmail(
+      _emailController.text.trim(),
+      _passwordController.text,
+    );
+    if (success && mounted) {
       context.go('/');
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(ref.read(authProvider).errorMessage ?? 'حدث خطأ'), backgroundColor: AppTheme.yemeniRed),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -711,33 +772,33 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 60),
               Icon(Icons.balance, size: 100, color: AppTheme.yemeniGreen),
               const SizedBox(height: 24),
-              const Text('Hakki Yamani', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 32, fontWeight: FontWeight.bold, color: AppTheme.yemeniGreen)),
+              const Text('حقي كيمني', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 32, fontWeight: FontWeight.bold, color: AppTheme.yemeniGreen)),
               const SizedBox(height: 8),
-              const Text('Login', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 18, color: AppTheme.textSecondaryLight)),
+              const Text('تسجيل الدخول', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 18, color: AppTheme.textSecondaryLight)),
               const SizedBox(height: 48),
               Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    TextFormField(controller: _emailController, keyboardType: TextInputType.emailAddress, decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(Icons.email_outlined)), validator: (value) {
-                      if (value == null || value.isEmpty) return 'Enter email';
-                      if (!value.contains('@')) return 'Invalid email';
+                    TextFormField(controller: _emailController, keyboardType: TextInputType.emailAddress, decoration: const InputDecoration(labelText: 'البريد الإلكتروني', prefixIcon: Icon(Icons.email_outlined)), validator: (value) {
+                      if (value == null || value.isEmpty) return 'الرجاء إدخال البريد الإلكتروني';
+                      if (!value.contains('@')) return 'البريد الإلكتروني غير صحيح';
                       return null;
                     }),
                     const SizedBox(height: 16),
-                    TextFormField(controller: _passwordController, obscureText: _obscurePassword, decoration: InputDecoration(labelText: 'Password', prefixIcon: const Icon(Icons.lock_outlined), suffixIcon: IconButton(icon: Icon(_obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined), onPressed: () => setState(() => _obscurePassword = !_obscurePassword))), validator: (value) {
-                      if (value == null || value.isEmpty) return 'Enter password';
+                    TextFormField(controller: _passwordController, obscureText: _obscurePassword, decoration: InputDecoration(labelText: 'كلمة المرور', prefixIcon: const Icon(Icons.lock_outlined), suffixIcon: IconButton(icon: Icon(_obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined), onPressed: () => setState(() => _obscurePassword = !_obscurePassword))), validator: (value) {
+                      if (value == null || value.isEmpty) return 'الرجاء إدخال كلمة المرور';
                       return null;
                     }),
                     const SizedBox(height: 24),
-                    ElevatedButton(onPressed: _handleLogin, child: const Text('Login')),
+                    ElevatedButton(onPressed: authState.isLoading ? null : _handleLogin, child: authState.isLoading ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Text('تسجيل الدخول')),
                     const SizedBox(height: 24),
-                    const Row(children: [Expanded(child: Divider()), Padding(padding: EdgeInsets.symmetric(horizontal: 16), child: Text('OR')), Expanded(child: Divider())]),
+                    const Row(children: [Expanded(child: Divider()), Padding(padding: EdgeInsets.symmetric(horizontal: 16), child: Text('أو')), Expanded(child: Divider())]),
                     const SizedBox(height: 24),
-                    OutlinedButton.icon(onPressed: () => context.push('/otp'), icon: const Icon(Icons.phone_android), label: const Text('Login with Phone'), style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16))),
+                    OutlinedButton.icon(onPressed: () => context.push('/otp'), icon: const Icon(Icons.phone_android), label: const Text('الدخول برقم الهاتف'), style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16))),
                     const SizedBox(height: 24),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Text("Don't have account?"), TextButton(onPressed: () => context.push('/register'), child: const Text('Register', style: TextStyle(fontWeight: FontWeight.bold)))]),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Text('ليس لديك حساب؟'), TextButton(onPressed: () => context.push('/register'), child: const Text('إنشاء حساب جديد', style: TextStyle(fontWeight: FontWeight.bold)))]),
                   ],
                 ),
               ),
@@ -751,16 +812,18 @@ class _LoginScreenState extends State<LoginScreen> {
 """)
 
 write_file(f"{base_dir}/lib/features/auth/screens/register_screen.dart", """import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../providers/auth_provider.dart';
 import '../../../core/config/theme/app_theme.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -784,19 +847,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
     if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Passwords do not match'), backgroundColor: AppTheme.yemeniRed));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('كلمات المرور غير متطابقة'), backgroundColor: AppTheme.yemeniRed));
       return;
     }
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account created'), backgroundColor: AppTheme.yemeniGreen));
+    final success = await ref.read(authProvider).registerWithEmail(
+      _emailController.text.trim(),
+      _passwordController.text,
+      _fullNameController.text.trim(),
+      _phoneController.text.trim(),
+      userType: _userType,
+    );
+    if (success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم إنشاء الحساب بنجاح'), backgroundColor: AppTheme.yemeniGreen));
       context.go('/');
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ref.read(authProvider).errorMessage ?? 'حدث خطأ'), backgroundColor: AppTheme.yemeniRed));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Register'), leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => context.pop())),
+      appBar: AppBar(title: const Text('إنشاء حساب جديد'), leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => context.pop())),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -807,36 +880,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 const Icon(Icons.person_add, size: 80, color: AppTheme.yemeniGreen),
                 const SizedBox(height: 24),
-                const Text('Join Now', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 24, fontWeight: FontWeight.bold)),
+                const Text('انضم إلينا الآن', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 24, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 32),
-                TextFormField(controller: _fullNameController, decoration: const InputDecoration(labelText: 'Full Name', prefixIcon: Icon(Icons.person_outline)), validator: (value) => value == null || value.isEmpty ? 'Enter name' : null),
+                TextFormField(controller: _fullNameController, decoration: const InputDecoration(labelText: 'الاسم الكامل', prefixIcon: Icon(Icons.person_outline)), validator: (value) => value == null || value.isEmpty ? 'الرجاء إدخال الاسم الكامل' : null),
                 const SizedBox(height: 16),
-                TextFormField(controller: _emailController, keyboardType: TextInputType.emailAddress, decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(Icons.email_outlined)), validator: (value) {
-                  if (value == null || value.isEmpty) return 'Enter email';
-                  if (!value.contains('@')) return 'Invalid email';
+                TextFormField(controller: _emailController, keyboardType: TextInputType.emailAddress, decoration: const InputDecoration(labelText: 'البريد الإلكتروني', prefixIcon: Icon(Icons.email_outlined)), validator: (value) {
+                  if (value == null || value.isEmpty) return 'الرجاء إدخال البريد الإلكتروني';
+                  if (!value.contains('@')) return 'البريد الإلكتروني غير صحيح';
                   return null;
                 }),
                 const SizedBox(height: 16),
-                TextFormField(controller: _phoneController, keyboardType: TextInputType.phone, decoration: const InputDecoration(labelText: 'Phone', prefixIcon: Icon(Icons.phone_outlined), hintText: '+967xxxxxxxxx'), validator: (value) => value == null || value.isEmpty ? 'Enter phone' : null),
+                TextFormField(controller: _phoneController, keyboardType: TextInputType.phone, decoration: const InputDecoration(labelText: 'رقم الهاتف', prefixIcon: Icon(Icons.phone_outlined), hintText: '+967xxxxxxxxx'), validator: (value) => value == null || value.isEmpty ? 'الرجاء إدخال رقم الهاتف' : null),
                 const SizedBox(height: 16),
-                TextFormField(controller: _passwordController, obscureText: _obscurePassword, decoration: InputDecoration(labelText: 'Password', prefixIcon: const Icon(Icons.lock_outlined), suffixIcon: IconButton(icon: Icon(_obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined), onPressed: () => setState(() => _obscurePassword = !_obscurePassword))), validator: (value) {
-                  if (value == null || value.isEmpty) return 'Enter password';
-                  if (value.length < 6) return 'Min 6 characters';
+                TextFormField(controller: _passwordController, obscureText: _obscurePassword, decoration: InputDecoration(labelText: 'كلمة المرور', prefixIcon: const Icon(Icons.lock_outlined), suffixIcon: IconButton(icon: Icon(_obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined), onPressed: () => setState(() => _obscurePassword = !_obscurePassword))), validator: (value) {
+                  if (value == null || value.isEmpty) return 'الرجاء إدخال كلمة المرور';
+                  if (value.length < 6) return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
                   return null;
                 }),
                 const SizedBox(height: 16),
-                TextFormField(controller: _confirmPasswordController, obscureText: _obscureConfirmPassword, decoration: InputDecoration(labelText: 'Confirm Password', prefixIcon: const Icon(Icons.lock_outlined), suffixIcon: IconButton(icon: Icon(_obscureConfirmPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined), onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword))), validator: (value) => value == null || value.isEmpty ? 'Confirm password' : null),
+                TextFormField(controller: _confirmPasswordController, obscureText: _obscureConfirmPassword, decoration: InputDecoration(labelText: 'تأكيد كلمة المرور', prefixIcon: const Icon(Icons.lock_outlined), suffixIcon: IconButton(icon: Icon(_obscureConfirmPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined), onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword))), validator: (value) => value == null || value.isEmpty ? 'الرجاء تأكيد كلمة المرور' : null),
                 const SizedBox(height: 24),
-                const Text('Account Type', style: TextStyle(fontFamily: 'Cairo', fontSize: 16, fontWeight: FontWeight.bold)),
+                const Text('نوع الحساب', style: TextStyle(fontFamily: 'Cairo', fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 12),
                 Row(children: [
-                  Expanded(child: RadioListTile<String>(title: const Text('Citizen'), value: 'citizen', groupValue: _userType, onChanged: (value) => setState(() => _userType = value!))),
-                  Expanded(child: RadioListTile<String>(title: const Text('Lawyer'), value: 'lawyer', groupValue: _userType, onChanged: (value) => setState(() => _userType = value!))),
+                  Expanded(child: RadioListTile<String>(title: const Text('مواطن'), value: 'citizen', groupValue: _userType, onChanged: (value) => setState(() => _userType = value!))),
+                  Expanded(child: RadioListTile<String>(title: const Text('محامٍ'), value: 'lawyer', groupValue: _userType, onChanged: (value) => setState(() => _userType = value!))),
                 ]),
                 const SizedBox(height: 24),
-                ElevatedButton(onPressed: _handleRegister, child: const Text('Create Account')),
+                ElevatedButton(onPressed: authState.isLoading ? null : _handleRegister, child: authState.isLoading ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Text('إنشاء الحساب')),
                 const SizedBox(height: 16),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Text('Have account?'), TextButton(onPressed: () => context.pop(), child: const Text('Login', style: TextStyle(fontWeight: FontWeight.bold)))]),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Text('لديك حساب بالفعل؟'), TextButton(onPressed: () => context.pop(), child: const Text('تسجيل الدخول', style: TextStyle(fontWeight: FontWeight.bold)))]),
               ],
             ),
           ),
@@ -848,17 +921,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
 """)
 
 write_file(f"{base_dir}/lib/features/auth/screens/otp_screen.dart", """import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import '../../../providers/auth_provider.dart';
 import '../../../core/config/theme/app_theme.dart';
 
-class OtpScreen extends StatefulWidget {
+class OtpScreen extends ConsumerStatefulWidget {
   const OtpScreen({super.key});
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
+  ConsumerState<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _OtpScreenState extends ConsumerState<OtpScreen> {
   final _phoneController = TextEditingController();
   String _currentCode = '';
   bool _isCodeSent = false;
@@ -871,22 +946,27 @@ class _OtpScreenState extends State<OtpScreen> {
 
   Future<void> _sendOtp() async {
     if (_phoneController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Enter phone'), backgroundColor: AppTheme.yemeniRed));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('الرجاء إدخال رقم الهاتف'), backgroundColor: AppTheme.yemeniRed));
       return;
     }
-    if (mounted) setState(() => _isCodeSent = true);
+    final success = await ref.read(authProvider).signInWithPhone('+967${_phoneController.text}');
+    if (success && mounted) setState(() => _isCodeSent = true);
   }
 
   Future<void> _verifyOtp() async {
-    if (mounted) {
+    final success = await ref.read(authProvider).verifyOtp(_currentCode);
+    if (success && mounted) {
       context.go('/');
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ref.read(authProvider).errorMessage ?? 'رمز غير صحيح'), backgroundColor: AppTheme.yemeniRed));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Verify Phone'), leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => context.pop())),
+      appBar: AppBar(title: const Text('التحقق من رقم الهاتف'), leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => context.pop())),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -896,20 +976,20 @@ class _OtpScreenState extends State<OtpScreen> {
               const SizedBox(height: 40),
               Icon(Icons.phone_android, size: 80, color: AppTheme.yemeniGreen),
               const SizedBox(height: 24),
-              const Text('Verify Phone', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 24, fontWeight: FontWeight.bold)),
+              const Text('التحقق من رقم الهاتف', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 24, fontWeight: FontWeight.bold)),
               const SizedBox(height: 16),
-              Text(_isCodeSent ? 'Enter code sent to ${_phoneController.text}' : 'Enter your phone', textAlign: TextAlign.center, style: const TextStyle(fontFamily: 'Cairo', fontSize: 16, color: AppTheme.textSecondaryLight)),
+              Text(_isCodeSent ? 'أدخل رمز التحقق المرسل إلى ${_phoneController.text}' : 'أدخل رقم هاتفك للتحقق', textAlign: TextAlign.center, style: const TextStyle(fontFamily: 'Cairo', fontSize: 16, color: AppTheme.textSecondaryLight)),
               const SizedBox(height: 40),
               if (!_isCodeSent) ...[
-                TextField(controller: _phoneController, keyboardType: TextInputType.phone, textAlign: TextAlign.center, decoration: const InputDecoration(labelText: 'Phone', hintText: 'xxxxxxxxx', prefixText: '+967 ')),
+                TextField(controller: _phoneController, keyboardType: TextInputType.phone, textAlign: TextAlign.center, decoration: const InputDecoration(labelText: 'رقم الهاتف', hintText: 'xxxxxxxxx', prefixText: '+967 ')),
                 const SizedBox(height: 24),
-                ElevatedButton(onPressed: _sendOtp, child: const Text('Send Code')),
+                ElevatedButton(onPressed: authState.isLoading ? null : _sendOtp, child: authState.isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('إرسال رمز التحقق')),
               ] else ...[
                 PinCodeTextField(appContext: context, length: 6, obscureText: false, animationType: AnimationType.fade, keyboardType: TextInputType.number, pinTheme: PinTheme(shape: PinCodeFieldShape.box, borderRadius: BorderRadius.circular(12), fieldHeight: 60, fieldWidth: 50, activeFillColor: Colors.white, inactiveFillColor: Colors.grey.shade100, selectedFillColor: Colors.white, activeColor: AppTheme.yemeniGreen, inactiveColor: Colors.grey, selectedColor: AppTheme.yemeniGreen), animationDuration: const Duration(milliseconds: 300), backgroundColor: Colors.transparent, enableActiveFill: true, onChanged: (value) => setState(() => _currentCode = value)),
                 const SizedBox(height: 32),
-                ElevatedButton(onPressed: _verifyOtp, child: const Text('Verify')),
+                ElevatedButton(onPressed: authState.isLoading ? null : _verifyOtp, child: authState.isLoading ? const CircularProgressIndicator(color: Colors.white) : const Text('تحقق')),
                 const SizedBox(height: 16),
-                TextButton(onPressed: () => setState(() => _isCodeSent = false), child: const Text('Change Phone')),
+                TextButton(onPressed: () => setState(() => _isCodeSent = false), child: const Text('تغيير رقم الهاتف')),
               ],
             ],
           ),
@@ -940,10 +1020,10 @@ class _HomeScreenState extends State<HomeScreen> {
       selectedIndex: _selectedIndex,
       onDestinationSelected: (index) => setState(() => _selectedIndex = index),
       destinations: const [
-        NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'Home'),
-        NavigationDestination(icon: Icon(Icons.library_books_outlined), selectedIcon: Icon(Icons.library_books), label: 'Laws'),
-        NavigationDestination(icon: Icon(Icons.chat_outlined), selectedIcon: Icon(Icons.chat), label: 'Consult'),
-        NavigationDestination(icon: Icon(Icons.person_outline), selectedIcon: Icon(Icons.person), label: 'Profile'),
+        NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'الرئيسية'),
+        NavigationDestination(icon: Icon(Icons.library_books_outlined), selectedIcon: Icon(Icons.library_books), label: 'القوانين'),
+        NavigationDestination(icon: Icon(Icons.chat_outlined), selectedIcon: Icon(Icons.chat), label: 'الاستشارات'),
+        NavigationDestination(icon: Icon(Icons.person_outline), selectedIcon: Icon(Icons.person), label: 'حسابي'),
       ],
     ));
   }
@@ -954,25 +1034,25 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: [
-      SliverAppBar(floating: true, title: const Text('Hakki Yamani'), actions: [IconButton(icon: const Icon(Icons.search), onPressed: () => context.push('/search')), IconButton(icon: const Icon(Icons.notifications_outlined), onPressed: () {})]),
+      SliverAppBar(floating: true, title: const Text('حقي كيمني'), actions: [IconButton(icon: const Icon(Icons.search), onPressed: () => context.push('/search')), IconButton(icon: const Icon(Icons.notifications_outlined), onPressed: () {})]),
       SliverToBoxAdapter(child: Container(decoration: const BoxDecoration(gradient: LinearGradient(colors: [AppTheme.yemeniGreen, AppTheme.lightGreen], begin: Alignment.topRight, end: Alignment.bottomLeft)), padding: const EdgeInsets.all(24), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text('Welcome', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+        const Text('مرحباً بك', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
-        const Text('Your Legal Encyclopedia', style: TextStyle(color: Colors.white70, fontSize: 16)),
+        const Text('موسوعتك القانونية الشاملة', style: TextStyle(color: Colors.white70, fontSize: 16)),
         const SizedBox(height: 16),
         Row(children: [
-          Expanded(child: ElevatedButton.icon(onPressed: () => context.push('/laws'), icon: const Icon(Icons.search), label: const Text('Search Laws'), style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: AppTheme.yemeniGreen))),
+          Expanded(child: ElevatedButton.icon(onPressed: () => context.push('/laws'), icon: const Icon(Icons.search), label: const Text('ابحث في القوانين'), style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: AppTheme.yemeniGreen))),
           const SizedBox(width: 12),
-          ElevatedButton.icon(onPressed: () => context.push('/new-consultation'), icon: const Icon(Icons.add), label: const Text('Consult')),
+          ElevatedButton.icon(onPressed: () => context.push('/new-consultation'), icon: const Icon(Icons.add), label: const Text('استشارة')),
         ]),
       ]))),
       SliverPadding(padding: const EdgeInsets.all(16), sliver: SliverGrid(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1.2, crossAxisSpacing: 12, mainAxisSpacing: 12), delegate: SliverChildBuilderDelegate((context, index) {
-        final items = [{'icon': Icons.gavel, 'title': 'Constitution'}, {'icon': Icons.work, 'title': 'Labor Law'}, {'icon': Icons.family_restroom, 'title': 'Personal Status'}, {'icon': Icons.school, 'title': 'Education'}];
+        final items = [{'icon': Icons.gavel, 'title': 'الدستور'}, {'icon': Icons.work, 'title': 'قانون العمل'}, {'icon': Icons.family_restroom, 'title': 'الأحوال الشخصية'}, {'icon': Icons.school, 'title': 'قانون التعليم'}];
         final item = items[index];
         return Card(child: InkWell(onTap: () => context.push('/laws'), borderRadius: BorderRadius.circular(12), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(item['icon'] as IconData, size: 40, color: AppTheme.yemeniGreen), const SizedBox(height: 8), Text(item['title'] as String, style: const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold), textAlign: TextAlign.center)])));
       }, childCount: 4)))),
-      SliverToBoxAdapter(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text('Latest Laws', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), TextButton(onPressed: () => context.push('/laws'), child: const Text('View All'))]))),
-      SliverList(delegate: SliverChildBuilderDelegate((context, index) => Card(margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), child: ListTile(leading: CircleAvatar(backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.article, color: AppTheme.yemeniGreen)), title: const Text('Yemen Labor Law'), subtitle: const Text('Last update: 2024'), trailing: const Icon(Icons.arrow_forward_ios, size: 16), onTap: () => context.push('/law/1'))), childCount: 3)),
+      SliverToBoxAdapter(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text('آخر القوانين', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), TextButton(onPressed: () => context.push('/laws'), child: const Text('عرض الكل'))])),
+      SliverList(delegate: SliverChildBuilderDelegate((context, index) => Card(margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), child: ListTile(leading: CircleAvatar(backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.article, color: AppTheme.yemeniGreen)), title: const Text('قانون العمل اليمني'), subtitle: const Text('آخر تحديث: 2024'), trailing: const Icon(Icons.arrow_forward_ios, size: 16), onTap: () => context.push('/law/1'))), childCount: 3)),
       const SliverToBoxAdapter(child: SizedBox(height: 16)),
     ]);
   }
@@ -981,19 +1061,19 @@ class HomeTab extends StatelessWidget {
 class LawsTab extends StatelessWidget {
   const LawsTab({super.key});
   @override
-  Widget build(BuildContext context) => const Center(child: Text('Laws', style: TextStyle(fontSize: 20)));
+  Widget build(BuildContext context) => const Center(child: Text('القوانين', style: TextStyle(fontSize: 20)));
 }
 
 class ConsultationsTab extends StatelessWidget {
   const ConsultationsTab({super.key});
   @override
-  Widget build(BuildContext context) => const Center(child: Text('Consultations', style: TextStyle(fontSize: 20)));
+  Widget build(BuildContext context) => const Center(child: Text('الاستشارات', style: TextStyle(fontSize: 20)));
 }
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
   @override
-  Widget build(BuildContext context) => const Center(child: Text('Profile', style: TextStyle(fontSize: 20)));
+  Widget build(BuildContext context) => const Center(child: Text('الملف الشخصي', style: TextStyle(fontSize: 20)));
 }
 """)
 
@@ -1010,23 +1090,23 @@ class LawsListScreen extends StatefulWidget {
 class _LawsListScreenState extends State<LawsListScreen> {
   String _selectedCategory = 'all';
   final List<Map<String, dynamic>> _categories = [
-    {'id': 'all', 'name': 'All', 'icon': Icons.library_books},
-    {'id': 'constitution', 'name': 'Constitution', 'icon': Icons.gavel},
-    {'id': 'labor', 'name': 'Labor', 'icon': Icons.work},
-    {'id': 'personal_status', 'name': 'Personal', 'icon': Icons.family_restroom},
-    {'id': 'education', 'name': 'Education', 'icon': Icons.school},
+    {'id': 'all', 'name': 'الكل', 'icon': Icons.library_books},
+    {'id': 'constitution', 'name': 'الدستور', 'icon': Icons.gavel},
+    {'id': 'labor', 'name': 'قانون العمل', 'icon': Icons.work},
+    {'id': 'personal_status', 'name': 'الأحوال الشخصية', 'icon': Icons.family_restroom},
+    {'id': 'education', 'name': 'قانون التعليم', 'icon': Icons.school},
   ];
   final List<Map<String, dynamic>> _laws = [
-    {'id': '1', 'title': 'Yemen Constitution', 'category': 'constitution', 'articlesCount': 150, 'lastUpdate': '2024-01-15'},
-    {'id': '2', 'title': 'Labor Law', 'category': 'labor', 'articlesCount': 200, 'lastUpdate': '2024-02-20'},
-    {'id': '3', 'title': 'Personal Status', 'category': 'personal_status', 'articlesCount': 180, 'lastUpdate': '2024-01-10'},
-    {'id': '4', 'title': 'Education Law', 'category': 'education', 'articlesCount': 120, 'lastUpdate': '2024-03-05'},
+    {'id': '1', 'title': 'الدستور اليمني', 'category': 'constitution', 'articlesCount': 150, 'lastUpdate': '2024-01-15'},
+    {'id': '2', 'title': 'قانون العمل اليمني', 'category': 'labor', 'articlesCount': 200, 'lastUpdate': '2024-02-20'},
+    {'id': '3', 'title': 'قانون الأحوال الشخصية', 'category': 'personal_status', 'articlesCount': 180, 'lastUpdate': '2024-01-10'},
+    {'id': '4', 'title': 'قانون التعليم', 'category': 'education', 'articlesCount': 120, 'lastUpdate': '2024-03-05'},
   ];
   List<Map<String, dynamic>> get _filteredLaws => _selectedCategory == 'all' ? _laws : _laws.where((law) => law['category'] == _selectedCategory).toList();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Legal Encyclopedia'), actions: [IconButton(icon: const Icon(Icons.search), onPressed: () => context.push('/search'))]), body: Column(children: [
+    return Scaffold(appBar: AppBar(title: const Text('الموسوعة القانونية'), actions: [IconButton(icon: const Icon(Icons.search), onPressed: () => context.push('/search'))]), body: Column(children: [
       SizedBox(height: 100, child: ListView.builder(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), itemCount: _categories.length, itemBuilder: (context, index) {
         final category = _categories[index];
         final isSelected = _selectedCategory == category['id'];
@@ -1035,7 +1115,7 @@ class _LawsListScreenState extends State<LawsListScreen> {
       const Divider(),
       Expanded(child: ListView.builder(padding: const EdgeInsets.all(16), itemCount: _filteredLaws.length, itemBuilder: (context, index) {
         final law = _filteredLaws[index];
-        return Card(margin: const EdgeInsets.only(bottom: 12), child: ListTile(leading: CircleAvatar(backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.article, color: AppTheme.yemeniGreen)), title: Text(law['title'], style: const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold)), subtitle: Text('${law['articlesCount']} articles - ${law['lastUpdate']}'), trailing: const Icon(Icons.arrow_forward_ios, size: 16), onTap: () => context.push('/law/${law['id']}')));
+        return Card(margin: const EdgeInsets.only(bottom: 12), child: ListTile(leading: CircleAvatar(backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.article, color: AppTheme.yemeniGreen)), title: Text(law['title'], style: const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold)), subtitle: Text('${law['articlesCount']} مادة - آخر تحديث: ${law['lastUpdate']}'), trailing: const Icon(Icons.arrow_forward_ios, size: 16), onTap: () => context.push('/law/${law['id']}')));
       })),
     ]));
   }
@@ -1055,14 +1135,14 @@ class LawDetailScreen extends StatefulWidget {
 class _LawDetailScreenState extends State<LawDetailScreen> {
   bool _isFavorite = false;
   final List<Map<String, dynamic>> _articles = [
-    {'number': 1, 'title': 'Article 1', 'content': 'Yemen is an independent Arab Islamic state with full sovereignty...'},
-    {'number': 2, 'title': 'Article 2', 'content': 'Islam is the state religion, and Islamic Sharia is the source of all legislation...'},
-    {'number': 3, 'title': 'Article 3', 'content': 'Arabic is the official language of the state...'},
+    {'number': 1, 'title': 'المادة الأولى', 'content': 'الجمهورية اليمنية دولة عربية إسلامية مستقلة ذات سيادة تامة، وهي وحدة لا تتجزأ ولا يجوز التنازل عن أي جزء من أراضيها...'},
+    {'number': 2, 'title': 'المادة الثانية', 'content': 'الإسلام دين الدولة، والشريعة الإسلامية مصدر جميع التشريعات...'},
+    {'number': 3, 'title': 'المادة الثالثة', 'content': 'اللغة العربية هي اللغة الرسمية للدولة...'},
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Yemen Constitution'), actions: [IconButton(icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border), onPressed: () => setState(() => _isFavorite = !_isFavorite)), IconButton(icon: const Icon(Icons.share), onPressed: () {})]), body: Expanded(child: ListView.builder(padding: const EdgeInsets.all(16), itemCount: _articles.length, itemBuilder: (context, index) {
+    return Scaffold(appBar: AppBar(title: const Text('الدستور اليمني'), actions: [IconButton(icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border), onPressed: () => setState(() => _isFavorite = !_isFavorite)), IconButton(icon: const Icon(Icons.share), onPressed: () {})]), body: Expanded(child: ListView.builder(padding: const EdgeInsets.all(16), itemCount: _articles.length, itemBuilder: (context, index) {
       final article = _articles[index];
       return Card(margin: const EdgeInsets.only(bottom: 12), child: ExpansionTile(leading: CircleAvatar(backgroundColor: AppTheme.yemeniGreen, child: Text('${article['number']}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))), title: Text(article['title'], style: const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.bold)), subtitle: Text(article['content'].substring(0, 50) + '...', maxLines: 1, overflow: TextOverflow.ellipsis), children: [Padding(padding: const EdgeInsets.all(16), child: Text(article['content'], style: const TextStyle(fontFamily: 'Cairo', fontSize: 16, height: 1.8)))]));
     })));
@@ -1071,6 +1151,7 @@ class _LawDetailScreenState extends State<LawDetailScreen> {
 """)
 
 write_file(f"{base_dir}/lib/features/laws/screens/search_screen.dart", """import 'package:flutter/material.dart';
+import '../../../core/config/theme/app_theme.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -1083,9 +1164,9 @@ class _SearchScreenState extends State<SearchScreen> {
   List<Map<String, dynamic>> _searchResults = [];
   bool _isSearching = false;
   final List<Map<String, dynamic>> _allLaws = [
-    {'id': '1', 'title': 'Yemen Constitution', 'category': 'Constitution'},
-    {'id': '2', 'title': 'Labor Law', 'category': 'Labor'},
-    {'id': '3', 'title': 'Personal Status', 'category': 'Personal'},
+    {'id': '1', 'title': 'الدستور اليمني', 'category': 'الدستور'},
+    {'id': '2', 'title': 'قانون العمل', 'category': 'العمل'},
+    {'id': '3', 'title': 'قانون الأحوال الشخصية', 'category': 'الأحوال الشخصية'},
   ];
 
   void _search(String query) {
@@ -1110,11 +1191,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Search Laws')), body: Column(children: [
-      Padding(padding: const EdgeInsets.all(16), child: TextField(controller: _searchController, decoration: InputDecoration(hintText: 'Search...', prefixIcon: const Icon(Icons.search), suffixIcon: _searchController.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _search(''); }) : null, border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))), onChanged: _search)),
+    return Scaffold(appBar: AppBar(title: const Text('البحث في القوانين')), body: Column(children: [
+      Padding(padding: const EdgeInsets.all(16), child: TextField(controller: _searchController, decoration: InputDecoration(hintText: 'ابحث عن قانون أو مادة...', prefixIcon: const Icon(Icons.search), suffixIcon: _searchController.text.isNotEmpty ? IconButton(icon: const Icon(Icons.clear), onPressed: () { _searchController.clear(); _search(''); }) : null, border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))), onChanged: _search)),
       if (_isSearching) const Expanded(child: Center(child: CircularProgressIndicator()))
       else if (_searchResults.isEmpty && _searchController.text.isNotEmpty)
-        Expanded(child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.search_off, size: 80, color: Colors.grey.shade400), const SizedBox(height: 16), const Text('No results', style: TextStyle(fontSize: 18, color: Colors.grey))])))
+        Expanded(child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.search_off, size: 80, color: Colors.grey.shade400), const SizedBox(height: 16), const Text('لا توجد نتائج', style: TextStyle(fontSize: 18, color: Colors.grey))])))
       else
         Expanded(child: ListView.builder(padding: const EdgeInsets.symmetric(horizontal: 16), itemCount: _searchResults.length, itemBuilder: (context, index) {
           final result = _searchResults[index];
@@ -1138,8 +1219,8 @@ class ConsultationsListScreen extends StatefulWidget {
 class _ConsultationsListScreenState extends State<ConsultationsListScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final List<Map<String, dynamic>> _consultations = [
-    {'id': '1', 'title': 'Work Contract', 'lawyerName': 'Ahmed Ali', 'status': 'in_progress', 'date': '2024-06-25', 'lastMessage': 'I will review'},
-    {'id': '2', 'title': 'Divorce Case', 'lawyerName': 'Fatima Ahmed', 'status': 'completed', 'date': '2024-06-20', 'lastMessage': 'Completed'},
+    {'id': '1', 'title': 'استشارة حول عقد عمل', 'lawyerName': 'أحمد محمد علي', 'status': 'in_progress', 'date': '2024-06-25', 'lastMessage': 'شكراً لك، سأراجع العقد وأعود إليك'},
+    {'id': '2', 'title': 'قضية طلاق', 'lawyerName': 'فاطمة أحمد', 'status': 'completed', 'date': '2024-06-20', 'lastMessage': 'تم الانتهاء من القضية بنجاح'},
   ];
 
   @override
@@ -1166,24 +1247,24 @@ class _ConsultationsListScreenState extends State<ConsultationsListScreen> with 
 
   String _getStatusText(String status) {
     switch (status) {
-      case 'pending': return 'Pending';
-      case 'in_progress': return 'In Progress';
-      case 'completed': return 'Completed';
-      case 'cancelled': return 'Cancelled';
+      case 'pending': return 'قيد الانتظار';
+      case 'in_progress': return 'قيد المعالجة';
+      case 'completed': return 'مكتملة';
+      case 'cancelled': return 'ملغاة';
       default: return status;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('My Consultations'), bottom: TabBar(controller: _tabController, tabs: const [Tab(text: 'All'), Tab(text: 'In Progress'), Tab(text: 'Completed')])), body: TabBarView(controller: _tabController, children: [_buildList(_consultations), _buildList(_consultations.where((c) => c['status'] == 'in_progress').toList()), _buildList(_consultations.where((c) => c['status'] == 'completed').toList())]), floatingActionButton: FloatingActionButton.extended(onPressed: () => context.push('/new-consultation'), icon: const Icon(Icons.add), label: const Text('New')));
+    return Scaffold(appBar: AppBar(title: const Text('استشاراتي'), bottom: TabBar(controller: _tabController, tabs: const [Tab(text: 'الكل'), Tab(text: 'قيد المعالجة'), Tab(text: 'المكتملة')])), body: TabBarView(controller: _tabController, children: [_buildConsultationsList(_consultations), _buildConsultationsList(_consultations.where((c) => c['status'] == 'in_progress').toList()), _buildConsultationsList(_consultations.where((c) => c['status'] == 'completed').toList())]), floatingActionButton: FloatingActionButton.extended(onPressed: () => context.push('/new-consultation'), icon: const Icon(Icons.add), label: const Text('استشارة جديدة')));
   }
 
-  Widget _buildList(List<Map<String, dynamic>> consultations) {
-    if (consultations.isEmpty) return const Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.chat_bubble_outline, size: 80, color: Colors.grey), SizedBox(height: 16), Text('No consultations', style: TextStyle(fontSize: 18, color: Colors.grey))]));
+  Widget _buildConsultationsList(List<Map<String, dynamic>> consultations) {
+    if (consultations.isEmpty) return const Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.chat_bubble_outline, size: 80, color: Colors.grey), SizedBox(height: 16), Text('لا توجد استشارات', style: TextStyle(fontSize: 18, color: Colors.grey))]));
     return ListView.builder(padding: const EdgeInsets.all(16), itemCount: consultations.length, itemBuilder: (context, index) {
-      final c = consultations[index];
-      return Card(margin: const EdgeInsets.only(bottom: 12), child: ListTile(leading: CircleAvatar(backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.person, color: AppTheme.yemeniGreen)), title: Text(c['title'], style: const TextStyle(fontWeight: FontWeight.bold)), subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const SizedBox(height: 4), Text(c['lawyerName']), const SizedBox(height: 4), Text(c['lastMessage'], maxLines: 1, overflow: TextOverflow.ellipsis)]), trailing: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: _getStatusColor(c['status']).withOpacity(0.1), borderRadius: BorderRadius.circular(12)), child: Text(_getStatusText(c['status']), style: TextStyle(color: _getStatusColor(c['status']), fontSize: 12, fontWeight: FontWeight.bold))), const SizedBox(height: 4), Text(c['date'], style: TextStyle(fontSize: 12, color: Colors.grey.shade600))]), onTap: () => context.push('/consultation/${c['id']}')));
+      final consultation = consultations[index];
+      return Card(margin: const EdgeInsets.only(bottom: 12), child: ListTile(leading: CircleAvatar(backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.person, color: AppTheme.yemeniGreen)), title: Text(consultation['title'], style: const TextStyle(fontWeight: FontWeight.bold)), subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const SizedBox(height: 4), Text(consultation['lawyerName']), const SizedBox(height: 4), Text(consultation['lastMessage'], maxLines: 1, overflow: TextOverflow.ellipsis)]), trailing: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: _getStatusColor(consultation['status']).withOpacity(0.1), borderRadius: BorderRadius.circular(12)), child: Text(_getStatusText(consultation['status']), style: TextStyle(color: _getStatusColor(consultation['status']), fontSize: 12, fontWeight: FontWeight.bold))), const SizedBox(height: 4), Text(consultation['date'], style: TextStyle(fontSize: 12, color: Colors.grey.shade600))]), onTap: () => context.push('/consultation/${consultation['id']}')));
     });
   }
 }
@@ -1203,8 +1284,9 @@ class _ConsultationDetailScreenState extends State<ConsultationDetailScreen> {
   final _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final List<Map<String, dynamic>> _messages = [
-    {'id': '1', 'senderId': 'client', 'content': 'Hello, I have a question', 'time': '10:30'},
-    {'id': '2', 'senderId': 'lawyer', 'content': 'Welcome, ask your question', 'time': '10:35'},
+    {'id': '1', 'senderId': 'client', 'content': 'مرحباً، لدي استفسار حول عقد العمل', 'time': '10:30 ص'},
+    {'id': '2', 'senderId': 'lawyer', 'content': 'أهلاً بك، تفضل بطرح استفسارك', 'time': '10:35 ص'},
+    {'id': '3', 'senderId': 'client', 'content': 'هل يمكن لصاحب العمل إنهاء العقد دون تعويض؟', 'time': '10:40 ص'},
   ];
 
   @override
@@ -1225,13 +1307,13 @@ class _ConsultationDetailScreenState extends State<ConsultationDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('Consultation'), Text('Ahmed Ali', style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal))]), actions: [IconButton(icon: const Icon(Icons.attach_file), onPressed: () {}), IconButton(icon: const Icon(Icons.more_vert), onPressed: () {})]), body: Column(children: [
+    return Scaffold(appBar: AppBar(title: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('استشارة حول عقد عمل'), Text('أحمد محمد علي', style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal))]), actions: [IconButton(icon: const Icon(Icons.attach_file), onPressed: () {}), IconButton(icon: const Icon(Icons.more_vert), onPressed: () {})]), body: Column(children: [
       Expanded(child: ListView.builder(controller: _scrollController, padding: const EdgeInsets.all(16), itemCount: _messages.length, itemBuilder: (context, index) {
         final message = _messages[index];
         final isMe = message['senderId'] == 'client';
         return Align(alignment: isMe ? Alignment.centerLeft : Alignment.centerRight, child: Container(margin: const EdgeInsets.only(bottom: 12), padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10), decoration: BoxDecoration(color: isMe ? AppTheme.yemeniGreen : Colors.grey.shade200, borderRadius: BorderRadius.only(topLeft: const Radius.circular(12), topRight: const Radius.circular(12), bottomLeft: Radius.circular(isMe ? 12 : 0), bottomRight: Radius.circular(isMe ? 0 : 12))), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(message['content'], style: TextStyle(color: isMe ? Colors.white : Colors.black)), const SizedBox(height: 4), Text(message['time'], style: TextStyle(fontSize: 10, color: isMe ? Colors.white70 : Colors.black54))])));
       })),
-      Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset: const Offset(0, -2))]), child: Row(children: [Expanded(child: TextField(controller: _messageController, decoration: InputDecoration(hintText: 'Type message...', border: OutlineInputBorder(borderRadius: BorderRadius.circular(24)), contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12)), maxLines: null, textInputAction: TextInputAction.send, onSubmitted: (_) => _sendMessage())), const SizedBox(width: 8), CircleAvatar(backgroundColor: AppTheme.yemeniGreen, child: IconButton(icon: const Icon(Icons.send, color: Colors.white), onPressed: _sendMessage))])),
+      Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset: const Offset(0, -2))]), child: Row(children: [Expanded(child: TextField(controller: _messageController, decoration: InputDecoration(hintText: 'اكتب رسالتك...', border: OutlineInputBorder(borderRadius: BorderRadius.circular(24)), contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12)), maxLines: null, textInputAction: TextInputAction.send, onSubmitted: (_) => _sendMessage())), const SizedBox(width: 8), CircleAvatar(backgroundColor: AppTheme.yemeniGreen, child: IconButton(icon: const Icon(Icons.send, color: Colors.white), onPressed: _sendMessage))])),
     ]));
   }
 }
@@ -1239,6 +1321,7 @@ class _ConsultationDetailScreenState extends State<ConsultationDetailScreen> {
 
 write_file(f"{base_dir}/lib/features/consultations/screens/new_consultation_screen.dart", """import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/config/theme/app_theme.dart';
 
 class NewConsultationScreen extends StatefulWidget {
   const NewConsultationScreen({super.key});
@@ -1251,7 +1334,7 @@ class _NewConsultationScreenState extends State<NewConsultationScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   String _selectedCategory = '';
-  final List<String> _categories = ['Labor Law', 'Personal Status', 'Criminal', 'Civil', 'Education', 'Other'];
+  final List<String> _categories = ['قانون العمل', 'الأحوال الشخصية', 'القانون الجنائي', 'القانون المدني', 'قانون التعليم', 'أخرى'];
 
   @override
   void dispose() {
@@ -1262,49 +1345,54 @@ class _NewConsultationScreenState extends State<NewConsultationScreen> {
 
   void _submitConsultation() {
     if (!_formKey.currentState!.validate()) return;
-    showDialog(context: context, builder: (context) => AlertDialog(title: const Text('Sent'), content: const Text('Your consultation has been sent'), actions: [TextButton(onPressed: () { Navigator.pop(context); context.pop(); }, child: const Text('OK'))]));
+    showDialog(context: context, builder: (context) => AlertDialog(title: const Text('تم إرسال الاستشارة'), content: const Text('سيتم مراجعة استشارتك والرد عليك في أقرب وقت'), actions: [TextButton(onPressed: () { Navigator.pop(context); context.pop(); }, child: const Text('حسناً'))]));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('New Consultation')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Form(key: _formKey, child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      TextFormField(controller: _titleController, decoration: const InputDecoration(labelText: 'Title', hintText: 'e.g. Work contract question'), validator: (value) => value == null || value.isEmpty ? 'Enter title' : null),
+    return Scaffold(appBar: AppBar(title: const Text('استشارة جديدة')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Form(key: _formKey, child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      TextFormField(controller: _titleController, decoration: const InputDecoration(labelText: 'عنوان الاستشارة', hintText: 'مثال: استفسار حول عقد العمل'), validator: (value) => value == null || value.isEmpty ? 'الرجاء إدخال عنوان الاستشارة' : null),
       const SizedBox(height: 16),
-      DropdownButtonFormField<String>(decoration: const InputDecoration(labelText: 'Category'), value: _selectedCategory.isEmpty ? null : _selectedCategory, items: _categories.map((category) => DropdownMenuItem(value: category, child: Text(category))).toList(), onChanged: (value) => setState(() => _selectedCategory = value!), validator: (value) => value == null || value.isEmpty ? 'Select category' : null),
+      DropdownButtonFormField<String>(decoration: const InputDecoration(labelText: 'التصنيف'), value: _selectedCategory.isEmpty ? null : _selectedCategory, items: _categories.map((category) => DropdownMenuItem(value: category, child: Text(category))).toList(), onChanged: (value) => setState(() => _selectedCategory = value!), validator: (value) => value == null || value.isEmpty ? 'الرجاء اختيار تصنيف' : null),
       const SizedBox(height: 16),
-      TextFormField(controller: _descriptionController, decoration: const InputDecoration(labelText: 'Details', hintText: 'Explain your question...'), maxLines: 6, validator: (value) => value == null || value.isEmpty ? 'Enter details' : null),
+      TextFormField(controller: _descriptionController, decoration: const InputDecoration(labelText: 'تفاصيل الاستشارة', hintText: 'اشرح استفسارك بالتفصيل...'), maxLines: 6, validator: (value) => value == null || value.isEmpty ? 'الرجاء إدخال تفاصيل الاستشارة' : null),
       const SizedBox(height: 24),
-      Card(child: ListTile(leading: const Icon(Icons.attach_file), title: const Text('Attach Files'), subtitle: const Text('PDF, Images'), trailing: const Icon(Icons.arrow_forward_ios, size: 16), onTap: () {})),
+      Card(child: ListTile(leading: const Icon(Icons.attach_file), title: const Text('إرفاق ملفات'), subtitle: const Text('PDF, Images, Documents'), trailing: const Icon(Icons.arrow_forward_ios, size: 16), onTap: () {})),
       const SizedBox(height: 24),
-      ElevatedButton.icon(onPressed: _submitConsultation, icon: const Icon(Icons.send), label: const Text('Send'), style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16))),
-    ]))));
+      ElevatedButton.icon(onPressed: _submitConsultation, icon: const Icon(Icons.send), label: const Text('إرسال الاستشارة'), style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16))),
+    ])));
   }
 }
 """)
 
 write_file(f"{base_dir}/lib/features/profile/screens/profile_screen.dart", """import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../providers/auth_provider.dart';
 import '../../../core/config/theme/app_theme.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Profile'), actions: [IconButton(icon: const Icon(Icons.settings), onPressed: () {})]), body: SingleChildScrollView(child: Column(children: [
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
+    final userData = authState.userData;
+    return Scaffold(appBar: AppBar(title: const Text('ملفي الشخصي'), actions: [IconButton(icon: const Icon(Icons.settings), onPressed: () {})]), body: SingleChildScrollView(child: Column(children: [
       const SizedBox(height: 24),
-      CircleAvatar(radius: 60, backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.person, size: 60, color: AppTheme.yemeniGreen)),
+      CircleAvatar(radius: 60, backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: userData?['profileImage'] != null ? ClipOval(child: Image.network(userData!['profileImage'], fit: BoxFit.cover)) : const Icon(Icons.person, size: 60, color: AppTheme.yemeniGreen)),
       const SizedBox(height: 16),
-      const Text('User', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Cairo', fontSize: 24, fontWeight: FontWeight.bold)),
-      Text('Citizen', style: TextStyle(color: Colors.grey.shade600)),
+      Text(userData?['fullName'] ?? 'مستخدم', style: const TextStyle(fontFamily: 'Cairo', fontSize: 24, fontWeight: FontWeight.bold)),
+      Text(userData?['userType'] == 'lawyer' ? 'محامٍ' : 'مواطن', style: TextStyle(color: Colors.grey.shade600)),
       const SizedBox(height: 24),
-      _buildMenuItem(context, icon: Icons.person_outline, title: 'Edit Profile', onTap: () => context.push('/edit-profile')),
-      _buildMenuItem(context, icon: Icons.chat_bubble_outline, title: 'Consultations', onTap: () => context.push('/consultations')),
-      _buildMenuItem(context, icon: Icons.bookmark_border, title: 'Saved', onTap: () {}),
-      _buildMenuItem(context, icon: Icons.help_outline, title: 'FAQ', onTap: () => context.push('/faq')),
-      _buildMenuItem(context, icon: Icons.info_outline, title: 'About', onTap: () => context.push('/about')),
-      _buildMenuItem(context, icon: Icons.privacy_tip_outlined, title: 'Privacy', onTap: () => context.push('/privacy')),
+      _buildMenuItem(context, icon: Icons.person_outline, title: 'تعديل الملف الشخصي', onTap: () => context.push('/edit-profile')),
+      _buildMenuItem(context, icon: Icons.chat_bubble_outline, title: 'استشاراتي', onTap: () => context.push('/consultations')),
+      _buildMenuItem(context, icon: Icons.bookmark_border, title: 'المحفوظات', onTap: () {}),
+      _buildMenuItem(context, icon: Icons.help_outline, title: 'الأسئلة الشائعة', onTap: () => context.push('/faq')),
+      _buildMenuItem(context, icon: Icons.info_outline, title: 'من نحن', onTap: () => context.push('/about')),
+      _buildMenuItem(context, icon: Icons.privacy_tip_outlined, title: 'الخصوصية والشروط', onTap: () => context.push('/privacy')),
       const Divider(height: 32),
-      ListTile(leading: const Icon(Icons.logout, color: AppTheme.yemeniRed), title: const Text('Logout', style: TextStyle(color: AppTheme.yemeniRed)), onTap: () => context.go('/login')),
+      ListTile(leading: const Icon(Icons.logout, color: AppTheme.yemeniRed), title: const Text('تسجيل الخروج', style: TextStyle(color: AppTheme.yemeniRed)), onTap: () => _showLogoutDialog(context, ref)),
       const SizedBox(height: 24),
     ])));
   }
@@ -1312,24 +1400,40 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildMenuItem(BuildContext context, {required IconData icon, required String title, required VoidCallback onTap}) {
     return Card(margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4), child: ListTile(leading: Icon(icon, color: AppTheme.yemeniGreen), title: Text(title, style: const TextStyle(fontFamily: 'Cairo')), trailing: const Icon(Icons.arrow_forward_ios, size: 16), onTap: onTap));
   }
+
+  void _showLogoutDialog(BuildContext context, WidgetRef ref) {
+    showDialog(context: context, builder: (context) => AlertDialog(title: const Text('تسجيل الخروج'), content: const Text('هل أنت متأكد من تسجيل الخروج؟'), actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')), ElevatedButton(onPressed: () { ref.read(authProvider).signOut(); Navigator.pop(context); context.go('/login'); }, style: ElevatedButton.styleFrom(backgroundColor: AppTheme.yemeniRed), child: const Text('خروج'))]));
+  }
 }
 """)
 
 write_file(f"{base_dir}/lib/features/profile/screens/edit_profile_screen.dart", """import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../../providers/auth_provider.dart';
 import '../../../core/config/theme/app_theme.dart';
 
-class EditProfileScreen extends StatefulWidget {
+class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final userData = ref.read(authProvider).userData;
+    _fullNameController.text = userData?['fullName'] ?? '';
+    _emailController.text = userData?['email'] ?? '';
+    _phoneController.text = userData?['phoneNumber'] ?? '';
+  }
 
   @override
   void dispose() {
@@ -1339,30 +1443,39 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {});
+    }
+  }
+
   Future<void> _saveProfile() async {
     if (!_formKey.currentState!.validate()) return;
+    await ref.read(authProvider).updateProfile({'fullName': _fullNameController.text.trim(), 'phoneNumber': _phoneController.text.trim()});
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Saved'), backgroundColor: AppTheme.yemeniGreen));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم حفظ التغييرات بنجاح'), backgroundColor: AppTheme.yemeniGreen));
       context.pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Edit Profile')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Form(key: _formKey, child: Column(children: [
+    return Scaffold(appBar: AppBar(title: const Text('تعديل الملف الشخصي')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Form(key: _formKey, child: Column(children: [
       Stack(children: [
         CircleAvatar(radius: 60, backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.person, size: 60, color: AppTheme.yemeniGreen)),
-        Positioned(bottom: 0, right: 0, child: CircleAvatar(backgroundColor: AppTheme.yemeniGreen, child: IconButton(icon: const Icon(Icons.camera_alt, color: Colors.white, size: 20), onPressed: () {}))),
+        Positioned(bottom: 0, right: 0, child: CircleAvatar(backgroundColor: AppTheme.yemeniGreen, child: IconButton(icon: const Icon(Icons.camera_alt, color: Colors.white, size: 20), onPressed: _pickImage))),
       ]),
       const SizedBox(height: 32),
-      TextFormField(controller: _fullNameController, decoration: const InputDecoration(labelText: 'Full Name', prefixIcon: Icon(Icons.person_outline)), validator: (value) => value == null || value.isEmpty ? 'Enter name' : null),
+      TextFormField(controller: _fullNameController, decoration: const InputDecoration(labelText: 'الاسم الكامل', prefixIcon: Icon(Icons.person_outline)), validator: (value) => value == null || value.isEmpty ? 'الرجاء إدخال الاسم' : null),
       const SizedBox(height: 16),
-      TextFormField(controller: _emailController, decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(Icons.email_outlined)), enabled: false),
+      TextFormField(controller: _emailController, decoration: const InputDecoration(labelText: 'البريد الإلكتروني', prefixIcon: Icon(Icons.email_outlined)), enabled: false),
       const SizedBox(height: 16),
-      TextFormField(controller: _phoneController, decoration: const InputDecoration(labelText: 'Phone', prefixIcon: Icon(Icons.phone_outlined)), validator: (value) => value == null || value.isEmpty ? 'Enter phone' : null),
+      TextFormField(controller: _phoneController, decoration: const InputDecoration(labelText: 'رقم الهاتف', prefixIcon: Icon(Icons.phone_outlined)), validator: (value) => value == null || value.isEmpty ? 'الرجاء إدخال رقم الهاتف' : null),
       const SizedBox(height: 32),
-      ElevatedButton.icon(onPressed: _saveProfile, icon: const Icon(Icons.save), label: const Text('Save'), style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16))),
-    ]))));
+      ElevatedButton.icon(onPressed: _saveProfile, icon: const Icon(Icons.save), label: const Text('حفظ التغييرات'), style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16))),
+    ])));
   }
 }
 """)
@@ -1379,22 +1492,22 @@ class LawyerDashboardScreen extends StatefulWidget {
 
 class _LawyerDashboardScreenState extends State<LawyerDashboardScreen> {
   final List<Map<String, dynamic>> _pendingRequests = [
-    {'id': '1', 'clientName': 'Mohammed', 'title': 'Work question', 'date': '5 min ago'},
-    {'id': '2', 'clientName': 'Sara', 'title': 'Custody case', 'date': '1 hour ago'},
+    {'id': '1', 'clientName': 'محمد عبدالله', 'title': 'استشارة حول فصل تعسفي', 'date': 'منذ 5 دقائق'},
+    {'id': '2', 'clientName': 'سارة أحمد', 'title': 'قضية حضانة أطفال', 'date': 'منذ ساعة'},
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Lawyer Dashboard')), body: SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Scaffold(appBar: AppBar(title: const Text('لوحة تحكم المحامي')), body: SingleChildScrollView(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        Expanded(child: _buildStatCard('New', '12', Icons.pending_actions, Colors.orange)),
+        Expanded(child: _buildStatCard('الطلبات الجديدة', '12', Icons.pending_actions, Colors.orange)),
         const SizedBox(width: 12),
-        Expanded(child: _buildStatCard('In Progress', '5', Icons.hourglass_bottom, Colors.blue)),
+        Expanded(child: _buildStatCard('قيد المعالجة', '5', Icons.hourglass_bottom, Colors.blue)),
         const SizedBox(width: 12),
-        Expanded(child: _buildStatCard('Completed', '48', Icons.check_circle, Colors.green)),
+        Expanded(child: _buildStatCard('مكتملة', '48', Icons.check_circle, Colors.green)),
       ]),
       const SizedBox(height: 24),
-      const Text('Pending Requests', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      const Text('طلبات الاستشارة الواردة', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       const SizedBox(height: 12),
       ListView.builder(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), itemCount: _pendingRequests.length, itemBuilder: (context, index) {
         final req = _pendingRequests[index];
@@ -1403,7 +1516,7 @@ class _LawyerDashboardScreenState extends State<LawyerDashboardScreen> {
           const SizedBox(height: 8),
           Text(req['title']),
           const SizedBox(height: 16),
-          Row(children: [Expanded(child: OutlinedButton(onPressed: () {}, child: const Text('Reject'))), const SizedBox(width: 12), Expanded(child: ElevatedButton(onPressed: () => context.push('/consultation/${req['id']}'), child: const Text('Accept')))]),
+          Row(children: [Expanded(child: OutlinedButton(onPressed: () {}, child: const Text('رفض'))), const SizedBox(width: 12), Expanded(child: ElevatedButton(onPressed: () => context.push('/consultation/${req['id']}'), child: const Text('قبول والرد')))]),
         ])));
       }),
     ])));
@@ -1425,26 +1538,26 @@ class LawyerProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Lawyer Profile')), body: SingleChildScrollView(child: Column(children: [
+    return Scaffold(appBar: AppBar(title: const Text('الملف المهني')), body: SingleChildScrollView(child: Column(children: [
       const SizedBox(height: 24),
       const CircleAvatar(radius: 50, backgroundColor: AppTheme.yemeniGreen, child: Icon(Icons.person, size: 50, color: Colors.white)),
       const SizedBox(height: 16),
-      const Text('Ahmed Ali', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-      const Text('Lawyer', style: TextStyle(color: Colors.grey)),
+      const Text('أ. أحمد محمد علي', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+      const Text('محامٍ ومستشار قانوني', style: TextStyle(color: Colors.grey)),
       const SizedBox(height: 8),
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Icon(Icons.star, color: Colors.amber, size: 20), const SizedBox(width: 4), const Text('4.8', style: TextStyle(fontWeight: FontWeight.bold)), const SizedBox(width: 16), const Icon(Icons.work_outline, size: 20), const SizedBox(width: 4), const Text('10 years')]),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Icon(Icons.star, color: Colors.amber, size: 20), const SizedBox(width: 4), const Text('4.8', style: TextStyle(fontWeight: FontWeight.bold)), const SizedBox(width: 16), const Icon(Icons.work_outline, size: 20), const SizedBox(width: 4), const Text('10 سنوات خبرة')]),
       const SizedBox(height: 24),
       Padding(padding: const EdgeInsets.symmetric(horizontal: 24), child: Card(child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text('Specializations', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        const Text('التخصصات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         const SizedBox(height: 8),
-        Wrap(spacing: 8, runSpacing: 8, children: [_buildChip('Labor'), _buildChip('Personal'), _buildChip('Commercial')]),
+        Wrap(spacing: 8, runSpacing: 8, children: [_buildChip('قانون العمل'), _buildChip('الأحوال الشخصية'), _buildChip('القانون التجاري')]),
         const SizedBox(height: 16),
-        const Text('Bio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        const Text('نبذة مهنية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         const SizedBox(height: 8),
-        const Text('Licensed lawyer with 10+ years experience'),
+        const Text('محامٍ مرخص لدى نقابة المحامين اليمنيين، متخصص في قضايا العمل والأحوال الشخصية بخبرة تزيد عن 10 سنوات.'),
       ])))),
       const SizedBox(height: 24),
-      Padding(padding: const EdgeInsets.symmetric(horizontal: 24), child: SizedBox(width: double.infinity, child: ElevatedButton.icon(onPressed: () => context.push('/new-consultation'), icon: const Icon(Icons.chat), label: const Text('Request Consultation'), style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16))))),
+      Padding(padding: const EdgeInsets.symmetric(horizontal: 24), child: SizedBox(width: double.infinity, child: ElevatedButton.icon(onPressed: () => context.push('/new-consultation'), icon: const Icon(Icons.chat), label: const Text('طلب استشارة'), style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16))))),
       const SizedBox(height: 24),
     ])));
   }
@@ -1463,20 +1576,20 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('About')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Scaffold(appBar: AppBar(title: const Text('من نحن')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Center(child: Icon(Icons.balance, size: 80, color: AppTheme.yemeniGreen)),
       const SizedBox(height: 24),
-      const Text('Hakki Yamani', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, textAlign: TextAlign.center)),
+      const Text('حقي كيمني', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, textAlign: TextAlign.center)),
       const SizedBox(height: 8),
-      const Text('Your Legal Encyclopedia', style: TextStyle(fontSize: 16, color: Colors.grey), textAlign: TextAlign.center),
+      const Text('موسوعتك القانونية الشاملة', style: TextStyle(fontSize: 16, color: Colors.grey), textAlign: TextAlign.center),
       const SizedBox(height: 32),
-      _buildSection('Vision', 'To be the primary legal reference for every Yemeni citizen'),
+      _buildSection('رؤيتنا', 'أن نكون المرجع القانوني الأول لكل مواطن يمني، ونشر الوعي الحقوقي في المجتمع.'),
       const SizedBox(height: 16),
-      _buildSection('Mission', 'Provide reliable legal information and connect citizens with lawyers'),
+      _buildSection('رسالتنا', 'توفير المعلومات القانونية الموثوقة والمبسطة، وربط المواطنين بمحامين متخصصين لضمان حصول الجميع على حقوقهم.'),
       const SizedBox(height: 16),
-      _buildSection('Goals', ['Spread legal culture', 'Comprehensive law database', 'Facilitate consultations', 'Support those in need']),
+      _buildSection('أهدافنا', ['نشر الثقافة القانونية بين أفراد المجتمع.', 'توفير قاعدة بيانات شاملة للقوانين اليمنية.', 'تسهيل الوصول إلى الاستشارات القانونية.', 'دعم الفئات الأكثر احتياجاً للمعرفة القانونية.']),
       const SizedBox(height: 32),
-      const Center(child: Text('Version 1.0.0\\nAll rights reserved 2024', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey))),
+      const Center(child: Text('الإصدار 1.0.0\\nجميع الحقوق محفوظة © 2024', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey))),
     ])));
   }
 
@@ -1498,21 +1611,21 @@ class PrivacyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Privacy')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      _buildHeading('Introduction'),
-      _buildText('Welcome to Hakki Yamani. We protect your privacy.'),
+    return Scaffold(appBar: AppBar(title: const Text('سياسة الخصوصية')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      _buildHeading('مقدمة'),
+      _buildText('نرحب بك في تطبيق "حقي كيمني". نحن نلتزم بحماية خصوصيتك وبياناتك الشخصية. توضح سياسة الخصوصية هذه كيفية جمعنا واستخدامنا وحمايتنا لمعلوماتك.'),
       const SizedBox(height: 24),
-      _buildHeading('Information We Collect'),
-      _buildText('We collect name, email, phone during registration.'),
+      _buildHeading('المعلومات التي نجمعها'),
+      _buildText('نقوم بجمع المعلومات التي تقدمها لنا عند التسجيل، مثل: الاسم، البريد الإلكتروني، رقم الهاتف. كما قد نجمع معلومات حول استخدامك للتطبيق لتحسين خدماتنا.'),
       const SizedBox(height: 24),
-      _buildHeading('How We Use'),
-      _buildList(['Provide consultations', 'Communicate with you', 'Improve app', 'Send notifications']),
+      _buildHeading('كيف نستخدم معلوماتك'),
+      _buildList(['توفير خدمات الاستشارات القانونية.', 'التواصل معك بشأن استفساراتك.', 'تحسين وتطوير التطبيق.', 'إرسال إشعارات هامة (بموافقتك).']),
       const SizedBox(height: 24),
-      _buildHeading('Data Security'),
-      _buildText('We use encryption to protect your data.'),
+      _buildHeading('أمان البيانات'),
+      _buildText('نستخدم تقنيات تشفير متقدمة لحماية بياناتك. لا نقوم بمشاركة معلوماتك الشخصية مع أطراف ثالثة إلا بموافقتك أو عند الطلب القانوني.'),
       const SizedBox(height: 24),
-      _buildHeading('Contact'),
-      _buildText('privacy@myyemeniright.com'),
+      _buildHeading('التواصل معنا'),
+      _buildText('لأي استفسارات حول سياسة الخصوصية، يرجى التواصل معنا عبر البريد الإلكتروني: privacy@myyemeniright.com'),
     ])));
   }
 
@@ -1529,18 +1642,18 @@ class TermsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('Terms')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text('Terms of Use', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+    return Scaffold(appBar: AppBar(title: const Text('شروط الاستخدام')), body: SingleChildScrollView(padding: const EdgeInsets.all(24), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text('شروط وأحكام الاستخدام', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
       const SizedBox(height: 24),
-      _buildSection('1. Acceptance', 'By using Hakki Yamani, you agree to these terms.'),
+      _buildSection('1. قبول الشروط', 'باستخدامك لتطبيق "حقي كيمني"، فإنك توافق على الالتزام بهذه الشروط والأحكام. إذا لم توافق على أي جزء منها، يرجى عدم استخدام التطبيق.'),
       const SizedBox(height: 16),
-      _buildSection('2. Service', 'The app provides legal information and consultations.'),
+      _buildSection('2. طبيعة الخدمة', 'يوفر التطبيق معلومات قانونية عامة واستشارات عبر محامين مرخصين. المعلومات المقدمة لا تغني عن الاستشارة القانونية المباشرة في القضايا المعقدة.'),
       const SizedBox(height: 16),
-      _buildSection('3. Accounts', 'You are responsible for your account security.'),
+      _buildSection('3. حسابات المستخدمين', 'أنت مسؤول عن الحفاظ على سرية بيانات حسابك. يجب أن تكون المعلومات المقدمة عند التسجيل دقيقة وحديثة.'),
       const SizedBox(height: 16),
-      _buildSection('4. Intellectual Property', 'All content is protected by copyright.'),
+      _buildSection('4. الملكية الفكرية', 'جميع المحتويات القانونية والشعارات والتصاميم داخل التطبيق محمية بموجب حقوق الملكية الفكرية ولا يجوز نسخها دون إذن.'),
       const SizedBox(height: 16),
-      _buildSection('5. Disclaimer', 'The app does not replace professional legal advice.'),
+      _buildSection('5. إخلاء المسؤولية', 'التطبيق لا يتحمل مسؤولية أي قرارات يتخذها المستخدم بناءً على المعلومات الموجودة في التطبيق دون الرجوع إلى محامٍ مختص.'),
     ])));
   }
 
@@ -1554,16 +1667,16 @@ import '../../../core/config/theme/app_theme.dart';
 class FaqScreen extends StatelessWidget {
   const FaqScreen({super.key});
   final List<Map<String, String>> _faqs = const [
-    {'q': 'How long is maternity leave?', 'a': '60 days according to Yemeni Labor Law'},
-    {'q': 'What are women inheritance rights?', 'a': 'Guaranteed by law and Sharia'},
-    {'q': 'Can employer fire without reason?', 'a': 'No, worker has right to compensation'},
-    {'q': 'What is custody age?', 'a': '7 for boys, 9 for girls'},
-    {'q': 'Disability rights in education?', 'a': 'Free and compulsory education with integration'},
+    {'q': 'كم مدة إجازة الوضع للمرأة العاملة في اليمن؟', 'a': 'وفقاً لقانون العمل اليمني، تستحق المرأة العاملة إجازة وضع مدفوعة الأجر لمدة (60) يوماً، توزع قبل الولادة وبعدها وفقاً للحالة الصحية.'},
+    {'q': 'ما هي حقوق المرأة في الميراث؟', 'a': 'كفل القانون اليمني والشريعة الإسلامية للمرأة حقها في الميراث. للمرأة نصف ما للرجل في حالات معينة، ولها كامل الحق في التركة في حالات أخرى وفقاً لنظام القرابة.'},
+    {'q': 'هل يحق لصاحب العمل فصل العامل دون سبب؟', 'a': 'لا، لا يجوز فصل العامل تعسفياً. إذا تم الفصل دون سبب مشروع، يحق للعامل المطالبة بتعويض وفقاً لأحكام قانون العمل اليمني.'},
+    {'q': 'ما هي سن الحضانة للأم في اليمن؟', 'a': 'تمنح الحضانة للأم حتى يبلغ الطفل سن السابعة للذكر والتاسعة للأنثى، ويمكن للقاضي تمديدها لما فيه مصلحة المحضون.'},
+    {'q': 'ما هي حقوق ذوي الإعاقة في التعليم؟', 'a': 'يكفل القانون اليمني حق ذوي الإعاقة في التعليم المجاني والإلزامي، مع توفير البيئة المناسبة ودمجهم في المدارس الحكومية.'},
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text('FAQ')), body: ListView.builder(padding: const EdgeInsets.all(16), itemCount: _faqs.length, itemBuilder: (context, index) {
+    return Scaffold(appBar: AppBar(title: const Text('الأسئلة الشائعة')), body: ListView.builder(padding: const EdgeInsets.all(16), itemCount: _faqs.length, itemBuilder: (context, index) {
       final faq = _faqs[index];
       return Card(margin: const EdgeInsets.only(bottom: 12), child: ExpansionTile(leading: CircleAvatar(backgroundColor: AppTheme.yemeniGreen.withOpacity(0.1), child: const Icon(Icons.help_outline, color: AppTheme.yemeniGreen)), title: Text(faq['q']!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)), children: [Padding(padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), child: Text(faq['a']!, style: const TextStyle(fontSize: 15, height: 1.6, color: Colors.black87)))]));
     }));
@@ -1579,7 +1692,7 @@ write_file(f"{base_dir}/android/build.gradle", """buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.3.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:\$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.0'
     }
 }
@@ -1593,7 +1706,7 @@ allprojects {
 
 rootProject.buildDir = '../build'
 subprojects {
-    project.buildDir = "\${rootProject.buildDir}/\${project.name}"
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
     project.evaluationDependsOn(':app')
@@ -1683,8 +1796,8 @@ write_file(f"{base_dir}/android/app/src/main/AndroidManifest.xml", """<manifest 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
-        android:label="Hakki Yamani"
-        android:name="\${applicationName}"
+        android:label="حقي كيمني"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -1726,7 +1839,7 @@ write_file(f"{base_dir}/android/settings.gradle", """pluginManagement {
     }
     settings.ext.flutterSdkPath = flutterSdkPath()
 
-    includeBuild("\${settings.ext.flutterSdkPath}/packages/flutter_tools/gradle")
+    includeBuild("${settings.ext.flutterSdkPath}/packages/flutter_tools/gradle")
 
     repositories {
         google()
@@ -1749,14 +1862,15 @@ plugins {
 include ":app"
 """)
 
-write_file(f"{base_dir}/README.md", """# Hakki Yamani - My Yemeni Right
+write_file(f"{base_dir}/README.md", """# حقي كيمني - My Yemeni Right
+التطبيق القانوني الشامل للمواطن اليمني
 
-## Requirements
+## المتطلبات
 - Flutter 3.10+
 - Dart 3.0+
-- Android Studio or VS Code
+- Android Studio أو VS Code
 
-## Build
-1. Install dependencies
+## خطوات البناء
+1. تثبيت المكتبات
 ```bash
 flutter pub get
