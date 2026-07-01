@@ -2,21 +2,19 @@ import os
 import urllib.request
 
 print("=" * 60)
-print("  جاري إنشاء مشروع 'حقي كيمني'")
+print("  Creating Hakki Yamani Project")
 print("=" * 60)
 
 project_name = "my_yemeni_right"
 base_dir = os.path.join(os.getcwd(), project_name)
 
-# إنشاء المجلدات
+# Create directories
 directories = [
     f"{base_dir}/lib/core/config/theme",
     f"{base_dir}/lib/core/services",
     f"{base_dir}/lib/features/auth/screens",
     f"{base_dir}/lib/features/home/screens",
     f"{base_dir}/lib/features/laws/screens",
-    f"{base_dir}/lib/features/consultations/screens",
-    f"{base_dir}/lib/features/profile/screens",
     f"{base_dir}/android/app/src/main/kotlin/com/myemeniright/app",
     f"{base_dir}/assets/images",
     f"{base_dir}/assets/icons",
