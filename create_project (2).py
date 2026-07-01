@@ -10,12 +10,8 @@ base = os.path.join(os.getcwd(), project)
 # Create directories
 dirs = [
     "lib/screens/auth",
-    "lib/screens/home", 
+    "lib/screens/home",
     "lib/screens/laws",
-    "lib/screens/consultations",
-    "lib/screens/profile",
-    "lib/screens/about",
-    "lib/screens/faq",
     "android/app/src/main/kotlin/com/myemeniright/app",
     "assets/images",
     "assets/icons",
@@ -23,12 +19,12 @@ dirs = [
 
 for d in dirs:
     os.makedirs(os.path.join(base, d), exist_ok=True)
-    print(f"✓ {d}")
+    print(f"OK: {d}")
 
 def write(path, content):
     with open(os.path.join(base, path), "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"✓ {path}")
+    print(f"OK: {path}")
 
 # pubspec.yaml
 write("pubspec.yaml", """name: my_yemeni_right
@@ -41,8 +37,6 @@ environment:
 
 dependencies:
   flutter:
-    sdk: flutter
-  flutter_localizations:
     sdk: flutter
   go_router: ^12.0.0
   cupertino_icons: ^1.0.6
@@ -72,6 +66,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -95,20 +90,12 @@ class MyApp extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF1B5E20),
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          ),
-        ),
       ),
       routerConfig: GoRouter(
         initialLocation: '/login',
         routes: [
-          GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
-          GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+          GoRoute(path: '/login', builder: (c, s) => const LoginScreen()),
+          GoRoute(path: '/', builder: (c, s) => const HomeScreen()),
         ],
       ),
       builder: (context, child) {
@@ -125,6 +112,7 @@ import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,11 +133,6 @@ class LoginScreen extends StatelessWidget {
               const TextField(obscureText: true, decoration: InputDecoration(labelText: 'Password', prefixIcon: Icon(Icons.lock))),
               const SizedBox(height: 24),
               ElevatedButton(onPressed: () => context.go('/'), child: const Text('Login')),
-              const SizedBox(height: 16),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Text("Don't have account? "),
-                TextButton(onPressed: () {}, child: const Text('Register')),
-              ]),
             ],
           ),
         ),
@@ -164,19 +147,18 @@ write("lib/screens/home/home_screen.dart", """import 'package:flutter/material.d
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Hakki Yamani')),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.balance, size: 80, color: Theme.of(context).primaryColor),
-            const SizedBox(height: 16),
-            const Text('Welcome to Hakki Yamani', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            const Text('Your Legal Encyclopedia', style: TextStyle(color: Colors.grey)),
+            Icon(Icons.balance, size: 80, color: Color(0xFF1B5E20)),
+            SizedBox(height: 16),
+            Text('Welcome', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ],
         ),
       ),
@@ -190,7 +172,6 @@ write("android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="ht
     <uses-permission android:name="android.permission.INTERNET"/>
     <application android:label="Hakki Yamani" android:name="\${applicationName}" android:icon="@mipmap/ic_launcher">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
-            <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -207,17 +188,11 @@ import io.flutter.embedding.android.FlutterActivity
 class MainActivity: FlutterActivity()
 """)
 
-# .gitignore
-write(".gitignore", """.dart_tool/
-.packages
-.pub/
-build/
-""")
-
-# README.md
-write("README.md", """# Hakki Yamani
-
-## Build
-```bash
-flutter pub get
-flutter build apk --release
+print("\n" + "=" * 60)
+print("SUCCESS! Project created.")
+print("=" * 60)
+print(f"Location: {base}")
+print("\nNext:")
+print("1. cd my_yemeni_right")
+print("2. flutter pub get")
+print("3. flutter build apk --release")
