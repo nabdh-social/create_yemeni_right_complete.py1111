@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -19,11 +19,14 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Python dependencies
+      - name: Install Pillow
         run: pip install Pillow
 
-      - name: Run Python script to create Flutter project
-        run: python create_yemeni_right_complete.py
+      - name: Create Flutter Project
+        run: |
+          python create_yemeni_right_complete.py
+          ls -la
+          ls -la my_yemeni_right/
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -36,17 +39,11 @@ jobs:
         with:
           flutter-version: '3.19.0'
           channel: 'stable'
-          cache: true
 
-      - name: Install Flutter dependencies
+      - name: Get dependencies
         run: |
           cd my_yemeni_right
           flutter pub get
-
-      - name: Analyze project
-        run: |
-          cd my_yemeni_right
-          flutter analyze || true
 
       - name: Build APK
         run: |
@@ -56,6 +53,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
+          name: app-release
           path: my_yemeni_right/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
