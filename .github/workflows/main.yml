@@ -14,6 +14,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install Pillow
+
+      - name: Run Python script to create Flutter project
+        run: python create_yemeni_right_complete.py
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -27,16 +38,24 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Install Flutter dependencies
+        run: |
+          cd my_yemeni_right
+          flutter pub get
+
+      - name: Analyze project
+        run: |
+          cd my_yemeni_right
+          flutter analyze || true
 
       - name: Build APK
-        run: flutter build apk --release
+        run: |
+          cd my_yemeni_right
+          flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: app-release-apk
+          path: my_yemeni_right/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
-          compression-level: 6
