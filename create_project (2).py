@@ -2,33 +2,37 @@ import os
 import urllib.request
 
 print("=" * 60)
-print("  Creating Hakki Yamani Project")
+print("  جاري إنشاء مشروع 'حقي كيمني'")
 print("=" * 60)
 
-project = "my_yemeni_right"
-base = os.path.join(os.getcwd(), project)
+project_name = "my_yemeni_right"
+base_dir = os.path.join(os.getcwd(), project_name)
 
-# Create directories
-dirs = [
-    "lib/screens/auth",
-    "lib/screens/home",
-    "lib/screens/laws",
-    "android/app/src/main/kotlin/com/myemeniright/app",
-    "assets/images",
-    "assets/icons",
+# إنشاء المجلدات
+directories = [
+    f"{base_dir}/lib/core/config/theme",
+    f"{base_dir}/lib/core/services",
+    f"{base_dir}/lib/features/auth/screens",
+    f"{base_dir}/lib/features/home/screens",
+    f"{base_dir}/lib/features/laws/screens",
+    f"{base_dir}/lib/features/consultations/screens",
+    f"{base_dir}/lib/features/profile/screens",
+    f"{base_dir}/android/app/src/main/kotlin/com/myemeniright/app",
+    f"{base_dir}/assets/images",
+    f"{base_dir}/assets/icons",
 ]
 
-for d in dirs:
-    os.makedirs(os.path.join(base, d), exist_ok=True)
-    print(f"OK: {d}")
+for dir_path in directories:
+    os.makedirs(dir_path, exist_ok=True)
+    print(f"OK: {dir_path.replace(base_dir + os.sep, '')}")
 
-def write(path, content):
-    with open(os.path.join(base, path), "w", encoding="utf-8") as f:
+def write_file(path, content):
+    with open(path, "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"OK: {path}")
+    print(f"OK: {os.path.basename(path)}")
 
 # pubspec.yaml
-write("pubspec.yaml", """name: my_yemeni_right
+write_file(f"{base_dir}/pubspec.yaml", """name: my_yemeni_right
 description: Legal App
 publish_to: 'none'
 version: 1.0.0+1
@@ -52,12 +56,12 @@ flutter:
 """)
 
 # main.dart
-write("lib/main.dart", """import 'package:flutter/material.dart';
+write_file(f"{base_dir}/lib/main.dart", """import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'screens/auth/login_screen.dart';
-import 'screens/home/home_screen.dart';
+import 'features/auth/screens/login_screen.dart';
+import 'features/home/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -108,7 +112,7 @@ class MyApp extends StatelessWidget {
 """)
 
 # login_screen.dart
-write("lib/screens/auth/login_screen.dart", """import 'package:flutter/material.dart';
+write_file(f"{base_dir}/lib/features/auth/screens/login_screen.dart", """import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -144,7 +148,7 @@ class LoginScreen extends StatelessWidget {
 """)
 
 # home_screen.dart
-write("lib/screens/home/home_screen.dart", """import 'package:flutter/material.dart';
+write_file(f"{base_dir}/lib/features/home/screens/home_screen.dart", """import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -169,7 +173,7 @@ class HomeScreen extends StatelessWidget {
 """)
 
 # AndroidManifest.xml
-write("android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+write_file(f"{base_dir}/android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application android:label="Hakki Yamani" android:name="\${applicationName}" android:icon="@mipmap/ic_launcher">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
@@ -184,7 +188,7 @@ write("android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="ht
 """)
 
 # MainActivity.kt
-write("android/app/src/main/kotlin/com/myemeniright/app/MainActivity.kt", """package com.myemeniright.app
+write_file(f"{base_dir}/android/app/src/main/kotlin/com/myemeniright/app/MainActivity.kt", """package com.myemeniright.app
 import io.flutter.embedding.android.FlutterActivity
 class MainActivity: FlutterActivity()
 """)
@@ -192,7 +196,7 @@ class MainActivity: FlutterActivity()
 print("\n" + "=" * 60)
 print("SUCCESS! Project created.")
 print("=" * 60)
-print(f"Location: {base}")
+print(f"Location: {base_dir}")
 print("\nNext:")
 print("1. cd my_yemeni_right")
 print("2. flutter pub get")
