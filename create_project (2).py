@@ -7,6 +7,7 @@ print("=" * 60)
 project = "my_yemeni_right"
 base = os.path.join(os.getcwd(), project)
 
+# Create directories
 dirs = [
     "lib/screens/auth",
     "lib/screens/home",
@@ -25,6 +26,7 @@ def write(path, content):
         f.write(content)
     print(f"OK: {path}")
 
+# pubspec.yaml
 write("pubspec.yaml", """name: my_yemeni_right
 description: Legal App
 publish_to: 'none'
@@ -48,6 +50,7 @@ flutter:
   uses-material-design: true
 """)
 
+# main.dart
 write("lib/main.dart", """import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -102,6 +105,7 @@ class MyApp extends StatelessWidget {
 }
 """)
 
+# login_screen.dart
 write("lib/screens/auth/login_screen.dart", """import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -136,6 +140,7 @@ class LoginScreen extends StatelessWidget {
 }
 """)
 
+# home_screen.dart
 write("lib/screens/home/home_screen.dart", """import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -159,6 +164,7 @@ class HomeScreen extends StatelessWidget {
 }
 """)
 
+# AndroidManifest.xml
 write("android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application android:label="Hakki Yamani" android:name="\${applicationName}" android:icon="@mipmap/ic_launcher">
@@ -173,17 +179,20 @@ write("android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="ht
 </manifest>
 """)
 
+# MainActivity.kt
 write("android/app/src/main/kotlin/com/myemeniright/app/MainActivity.kt", """package com.myemeniright.app
 import io.flutter.embedding.android.FlutterActivity
 class MainActivity: FlutterActivity()
 """)
 
+# .gitignore
 write(".gitignore", """.dart_tool/
 .packages
 .pub/
 build/
 """)
 
+# README.md
 write("README.md", """# Hakki Yamani
 
 ## Build
