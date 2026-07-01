@@ -1,34 +1,37 @@
 import os
 
 print("=" * 60)
-print("  Creating Hakki Yamani Project")
+print("  Creating Flutter Project Structure")
 print("=" * 60)
 
-project = "my_yemeni_right"
-base = os.path.join(os.getcwd(), project)
+project_name = "my_yemeni_right"
+base_dir = os.path.join(os.getcwd(), project_name)
 
 # Create directories
-dirs = [
+directories = [
     "lib/screens/auth",
     "lib/screens/home",
     "lib/screens/laws",
+    "lib/screens/consultations",
+    "lib/screens/profile",
+    "lib/screens/about",
     "android/app/src/main/kotlin/com/myemeniright/app",
     "assets/images",
     "assets/icons",
 ]
 
-for d in dirs:
-    os.makedirs(os.path.join(base, d), exist_ok=True)
+for d in directories:
+    os.makedirs(os.path.join(base_dir, d), exist_ok=True)
     print(f"OK: {d}")
 
-def write(path, content):
-    with open(os.path.join(base, path), "w", encoding="utf-8") as f:
+def write_file(path, content):
+    with open(os.path.join(base_dir, path), "w", encoding="utf-8") as f:
         f.write(content)
     print(f"OK: {path}")
 
 # pubspec.yaml
-write("pubspec.yaml", """name: my_yemeni_right
-description: Legal App
+write_file("pubspec.yaml", """name: my_yemeni_right
+description: Hakki Yamani - Legal App
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -37,6 +40,8 @@ environment:
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
   go_router: ^12.0.0
   cupertino_icons: ^1.0.6
@@ -48,10 +53,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
 """)
 
 # main.dart
-write("lib/main.dart", """import 'package:flutter/material.dart';
+write_file("lib/main.dart", """import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -66,6 +74,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -106,11 +115,12 @@ class MyApp extends StatelessWidget {
 """)
 
 # login_screen.dart
-write("lib/screens/auth/login_screen.dart", """import 'package:flutter/material.dart';
+write_file("lib/screens/auth/login_screen.dart", """import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,10 +151,11 @@ class LoginScreen extends StatelessWidget {
 """)
 
 # home_screen.dart
-write("lib/screens/home/home_screen.dart", """import 'package:flutter/material.dart';
+write_file("lib/screens/home/home_screen.dart", """import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +176,7 @@ class HomeScreen extends StatelessWidget {
 """)
 
 # AndroidManifest.xml
-write("android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+write_file("android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application android:label="Hakki Yamani" android:name="\${applicationName}" android:icon="@mipmap/ic_launcher">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
@@ -180,20 +191,20 @@ write("android/app/src/main/AndroidManifest.xml", """<manifest xmlns:android="ht
 """)
 
 # MainActivity.kt
-write("android/app/src/main/kotlin/com/myemeniright/app/MainActivity.kt", """package com.myemeniright.app
+write_file("android/app/src/main/kotlin/com/myemeniright/app/MainActivity.kt", """package com.myemeniright.app
 import io.flutter.embedding.android.FlutterActivity
 class MainActivity: FlutterActivity()
 """)
 
 # .gitignore
-write(".gitignore", """.dart_tool/
+write_file(".gitignore", """.dart_tool/
 .packages
 .pub/
 build/
 """)
 
 # README.md
-write("README.md", """# Hakki Yamani
+write_file("README.md", """# Hakki Yamani - My Yemeni Right
 
 ## Build
 ```bash
